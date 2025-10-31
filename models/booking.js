@@ -4,15 +4,15 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    age: {
-        type: Number,
+    email: {
+        type: String,
         required: true
     },
     event: {
         type: String,
         required: true
     },
-    email: {
+    ticketType: {
         type: String,
         required: true
     },createdAt: {

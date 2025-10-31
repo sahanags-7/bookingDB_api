@@ -18,7 +18,45 @@ app.get("/bookings", async (req, res) => {
      }
  });
 
- app.get("/bookings/:id", async (req, res) => {
+app.get("/bookings/search", async (req, res) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).json({ message: "Email query parameter is required" });
+    }
+
+    const booking = await Booking.findOne({ email });
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.json(booking);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+ 
+app.get("/bookings/filter", async (req, res) => {
+  try {
+    const { event } = req.query;
+    if (!event) {
+      return res.status(400).json({ message: "Event query parameter is required" });
+    }
+
+    const booking = await Booking.findOne({ event });
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.json(booking);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}); 
+
+app.get("/bookings/:id", async (req, res) => {
      try {
          const booking = await Booking.findById(req.params.id);
          if (!booking) {
@@ -28,7 +66,8 @@ app.get("/bookings", async (req, res) => {
      } catch (error) {
          res.status(500).json({ error: error.message });
      }
- });
+});
+
 
 
 
